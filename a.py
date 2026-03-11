@@ -69,7 +69,7 @@ Affected Services: {affected_services}
 
 
 ### Models 
-gemini_model = ChatGoogleGenerativeAI(model="gemini-2.5-flash",temperature=0.3).with_structured_output(GeminiAnalysis) 
+gemini_model = ChatGoogleGenerativeAI(model="gemini-2.0-flash",temperature=0.3).with_structured_output(GeminiAnalysis) 
 
 groq_model = ChatGroq(model="llama-3.1-8b-instant",temperature=0.3)
 

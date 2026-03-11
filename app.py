@@ -89,6 +89,9 @@ def save_to_db(model: str, result):
 
 init_db()
 
+from pydantic import BaseModel, field_validator
+from typing import List, Union
+
 # Schema for Structured Output
 class IncidentAnalysis(BaseModel):
     root_cause: str
@@ -97,6 +100,13 @@ class IncidentAnalysis(BaseModel):
     immediate_fix: str
     long_term_prevention: str
     analysis_time: str
+
+    @field_validator('affected_services', mode='before')
+    @classmethod
+    def ensure_list(cls, v):
+        if isinstance(v, str):
+            return [v]
+        return v
 
 # -------------------------------------------------
 # Sidebar - Configuration
@@ -171,15 +181,16 @@ if analyze_btn:
 
                 # Initialize LLM
                 if selected_model == "Google Gemini":
-                    # Using the model name as per your project settings (gemini-2.5-flash as used in first.py)
+                    # Latest Free Model (Gemini 1.5 Flash is stable and free)
                     llm = ChatGoogleGenerativeAI(
-                        model="gemini-2.5-flash", 
+                        model="gemini-2.0-flash", 
                         temperature=0.3
                     ).with_structured_output(IncidentAnalysis)
                     model_id = "gemini"
                 else:
+                    # Latest Free Versatile Model on Groq
                     llm = ChatGroq(
-                        model_name="llama-3.1-8b-instant",
+                        model_name="llama-3.3-70b-versatile",
                         temperature=0.3
                     ).with_structured_output(IncidentAnalysis)
                     model_id = "groq"

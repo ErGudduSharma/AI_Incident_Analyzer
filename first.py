@@ -91,7 +91,7 @@ Incident Logs:
 # Models
 # -------------------------------------------------
 gemini = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-2.0-flash",
     temperature=0.3
 ).with_structured_output(IncidentAnalysis)
 
