@@ -171,8 +171,9 @@ if analyze_btn:
 
                 # Initialize LLM
                 if selected_model == "Google Gemini":
+                    # Using the model name as per your project settings (gemini-2.5-flash as used in first.py)
                     llm = ChatGoogleGenerativeAI(
-                        model="gemini-1.5-flash", # Adjusted to 1.5 as 2.5 is not standard, user can change back if needed
+                        model="gemini-2.5-flash", 
                         temperature=0.3
                     ).with_structured_output(IncidentAnalysis)
                     model_id = "gemini"
