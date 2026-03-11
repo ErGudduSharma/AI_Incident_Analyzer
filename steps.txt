@@ -1,0 +1,41 @@
+Agenda: Building an AI Incident Root Cause Analyzer to Automate DevOps Debugging.
+
+Step 1: Environment Setup
+- Create a virtual environment to isolate dependencies.
+- Create a `.env` file to securely store `GOOGLE_API_KEY` and `GROQ_API_KEY`.
+
+Step 2: Dependency Management
+- Create `requirements.txt` with necessary libraries:
+  - `fastapi`, `uvicorn`: For the web server.
+  - `langchain`, `langchain-google-genai`, `langchain-groq`: For AI orchestration.
+  - `python-dotenv`: To manage secrets.
+  - `requests`: For the client script.
+- Install dependencies using `pip install -r requirements.txt`.
+
+Step 3: Database & Backend Implementation (`first.py`)
+- Initialize a SQLite database (`incident_audit.db`) to store incident history.
+- Define the `incidents` table structure (root_cause, severity, fix, etc.).
+- Create Pydantic models to ensure the AI returns structured JSON data.
+- Set up LangChain prompts to instruct the AI to act as a Senior SRE.
+- Build two separate chains:
+  - `gemini_chain`: Uses Google Gemini 2.5 Flash.
+  - `groq_chain`: Uses Llama 3 via Groq.
+- Add a persistence layer (`save_incident` function) to automatically save AI results to the DB.
+- Expose these chains as API endpoints using `langserve.add_routes`.
+
+Step 4: Client-Side Scripting (`second.py`)
+- specific the `BASE_URL` of the local FastAPI server.
+- specific raw incident logs (simulating a real production error).
+- Write a function to send these logs to the backend API via a POST request.
+- Parse the JSON response and format it into a readable CLI report ("Pretty Print").
+- Add an `auto_alert` function to trigger pseudo-alerts for High/Critical severity issues.
+
+Step 5: Execution & Testing
+- Start the server: `uvicorn first:app --reload`
+- Run the client analysis: `python second.py`
+- Verify that the output is correct and that the data is successfully stored in `incident_audit.db`.
+
+System Architecture:
+[ Production Logs ] -> [ Client Script ] -> [ FastAPI Server ] -> [ LangChain ] -> [ Gemini/Groq LLM ]
+                                                                      |
+                                                                      +-> [ SQLite Database (Audit) ]

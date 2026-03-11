@@ -1,0 +1,17 @@
+FinPay Solutions is a fintech company handling online payments.
+
+The company runs multiple backend services like payment-service and cache systems.
+
+When a production issue occurs, engineers receive raw and unstructured log files.
+
+Manually analyzing these logs takes too much time.
+
+Identifying root cause and severity depends on experience and guesswork.
+
+There is no automatic system to suggest fixes.
+
+Past incidents are not stored properly for future reference.
+
+This leads to slow incident resolution and service downtime.
+
+The company needs an AI-based system that can automatically analyze incident logs, identify the problem, assess severity, suggest fixes, and store the results for audit purposes.
